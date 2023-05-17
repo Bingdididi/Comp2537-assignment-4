@@ -56,7 +56,7 @@ const setupCards = async (count) => {
   totalPairsElement.textContent = `Total Pairs: ${numberOfPairs}`;
 
 
-  let pairsLeft = numberOfPairs - pairsMatched;
+  let pairsLeft = numberOfPairs;
 
   const pairsLeftElement = document.getElementById("pairs-left");
   pairsLeftElement.textContent = `Pairs Left: ${pairsLeft}`;
@@ -101,6 +101,12 @@ const startGame = () => {
       // Game over logic here
     }
   }, 1000);
+  updatePairsLeft();
+};
+const updatePairsLeft = () => {
+  const pairsLeft = parseInt(document.getElementById("total-pairs").textContent.split(" ")[2]) - pairsMatched;
+  const pairsLeftElement = document.getElementById("pairs-left");
+  pairsLeftElement.textContent = `Pairs Left: ${pairsLeft}`;
 };
 
 
@@ -198,7 +204,7 @@ document.addEventListener("click", (event) => {
       if (firstCard.innerHTML === secondCard.innerHTML) {
         pairsMatched++;
         document.getElementById("matched").innerText = pairsMatched;
-
+        updatePairsLeft(); // Add this line
         firstCard.classList.add("matched");
         secondCard.classList.add("matched");
 
