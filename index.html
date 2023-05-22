@@ -13,22 +13,7 @@
 <body>
     <header>
         <h1>Memory Game</h1>
-        <div id="stats">
-            <span id="total-pairs">Total Pairs: 0</span>
-            <span>Clicks: <span id="clicks">0</span>
-            <span>Pairs matched: <span id="matched">0</span>
-            <span id="pairs-left">Pairs left: 0</span>
-            <div class="timer">
-              Time Given: <span id="timerGiven">00:00</span>
-            </div>
-            <div class="timer">
-              Time Passed: <span id="timerPassed">00:00</span>
-            </div>
-        </div>
     </header>
-    <div id="game_grid">
-        <!-- Add cards here -->
-    </div>
     <div id="controls">
       <!-- Add this button inside the #controls div -->
         <button id="power-up">Power Up</button>
@@ -44,12 +29,28 @@
         <select id="theme">
             <option value="light">Light</option>
             <option value="dark">Dark</option>
-        </select>
-        
+        </select>  
     </div>
-    <div id="winning-message" class="hidden">
-        <h2>Congratulations! You won!</h2>
-        <button id="play-again">Play Again</button>
+    <div id="game_container" style="display: none;">
+        <div id="stats">
+            <span id="total-pairs">Total Pairs: 0</span>
+            <span>Clicks: <span id="clicks">0</span>
+            <span>Pairs matched: <span id="matched">0</span>
+            <span id="pairs-left">Pairs left: 0</span>
+            <div class="timer">
+              Time Given: <span id="timerGiven">00:00</span>
+            </div>
+            <div class="timer">
+              Time Passed: <span id="timerPassed">00:00</span>
+            </div>
+        </div>
+        <div id="game_grid">
+            <!-- Add cards here -->
+        </div>
+        <div id="winning-message" class="hidden">
+            <h2>Congratulations! You won!</h2>
+            <button id="play-again">Play Again</button>
+        </div>
     </div>
 </body>
 </html>

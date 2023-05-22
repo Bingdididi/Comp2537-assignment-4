@@ -79,9 +79,10 @@ const formatTime = (time) => {
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 };
 
-const startGame = () => {
+const initGame = () => {
+  
   const difficulty = parseInt(document.getElementById("difficulty").value);
-  const timeGiven = difficulty * 2; // Time given in seconds based on difficulty (e.g., 6 cards = 12 seconds)
+  const timeGiven = difficulty * 3; // Time given in seconds based on difficulty (e.g., 6 cards = 12 seconds)
   
   setupCards(difficulty);
   clicks = 0;
@@ -91,18 +92,54 @@ const startGame = () => {
   document.getElementById("matched").innerText = pairsMatched;
   document.getElementById("timerGiven").innerText = formatTime(timeGiven); // Timer for time given
   document.getElementById("timerPassed").innerText = "00:00"; // Timer for time passed
+  updatePairsLeft();
+};
+
+const startGame = () => {
+  const startButton = document.getElementById("start");
+startButton.style.display = "none";
+
+  const gameContainer = document.getElementById("game_container");
+  gameContainer.style.display = "block";
+
+  const difficulty = parseInt(document.getElementById("difficulty").value);
+  const timeGiven = difficulty * 3;
+
+  document.getElementById("timerGiven").innerText = formatTime(timeGiven);
   clearInterval(gameInterval);
   gameInterval = setInterval(() => {
     gameTime++;
     const timeElapsed = formatTime(gameTime);
-    document.getElementById("timerPassed").innerText = timeElapsed; // Update the timer for time passed
-    if (gameTime === timeGiven) {
+    document.getElementById("timerPassed").innerText = timeElapsed;
+
+    if (gameTime >= timeGiven) {
       clearInterval(gameInterval);
-      // Game over logic here
+      endGame();  // Game over logic here
     }
   }, 1000);
-  updatePairsLeft();
 };
+
+const endGame = () => {
+  const startButton = document.getElementById("start");
+startButton.style.display = "block";
+
+  // Disable card clicks
+  canClick = false;
+
+  // Hide the game container
+  const gameContainer = document.getElementById("game_container");
+  gameContainer.style.display = "none";
+
+  // Show game over message
+  const gameOverMessage = document.getElementById("game-over-message");
+  gameOverMessage.style.display = "block";
+};
+
+
+
+
+
+
 const updatePairsLeft = () => {
   const pairsLeft = parseInt(document.getElementById("total-pairs").textContent.split(" ")[2]) - pairsMatched;
   const pairsLeftElement = document.getElementById("pairs-left");
@@ -140,8 +177,12 @@ const revealAllCards = () => {
 
 document.getElementById("power-up").addEventListener("click", revealAllCards);
 document.getElementById("start").addEventListener("click", startGame);
-document.getElementById("reset").addEventListener("click", startGame);
-document.getElementById("difficulty").addEventListener("change", startGame);
+document.getElementById("reset").addEventListener("click", () => {
+  initGame();
+  startGame();
+});
+
+document.getElementById("difficulty").addEventListener("change", initGame);
 // ... rest of your JavaScript ...
 
 document.getElementById("theme").addEventListener("change", () => {
@@ -153,18 +194,20 @@ document.getElementById("theme").addEventListener("change", () => {
     root.style.setProperty("--header-background-color", "#444");
     root.style.setProperty("--text-color", "#f0f0f0");
     root.style.setProperty("--border-color", "#666");
+    root.style.setProperty("--card-back-color", "#333");
   } else {
     root.style.setProperty("--background-color", "#ffffff");
     root.style.setProperty("--header-background-color", "#f0f0f0");
     root.style.setProperty("--text-color", "#000000");
     root.style.setProperty("--border-color", "#ccc");
+    root.style.setProperty("--card-back-color", "#ffffff");
   }
 });
 
 
 document.getElementById("play-again").addEventListener("click", () => {
   document.getElementById("winning-message").classList.add("hidden");
-  startGame();
+  initGame();
 });
 
 
@@ -229,5 +272,5 @@ document.addEventListener("click", (event) => {
     }
 });
 
-startGame();
+initGame();
 
