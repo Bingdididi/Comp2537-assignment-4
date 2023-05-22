@@ -82,7 +82,7 @@ const formatTime = (time) => {
 const initGame = () => {
   
   const difficulty = parseInt(document.getElementById("difficulty").value);
-  const timeGiven = difficulty * 3; // Time given in seconds based on difficulty (e.g., 6 cards = 12 seconds)
+  const timeGiven = difficulty * 30; // Time given in seconds based on difficulty (e.g., 6 cards = 12 seconds)
   
   setupCards(difficulty);
   clicks = 0;
@@ -103,7 +103,7 @@ startButton.style.display = "none";
   gameContainer.style.display = "block";
 
   const difficulty = parseInt(document.getElementById("difficulty").value);
-  const timeGiven = difficulty * 3;
+  const timeGiven = difficulty * 30;
 
   document.getElementById("timerGiven").innerText = formatTime(timeGiven);
   clearInterval(gameInterval);
